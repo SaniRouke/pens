@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+    <div class="tabs">
+        <ul class="list" onclick="func()">
+            {{range $i, $elem := .}}
+            <li class="tab">
+                <input type="radio" name="title" id="{{.Title}}" {{if eq $i 0}}checked{{end}}>
+                <label for="{{.Title}}">{{.Title}}</label>
+            </li>
+            {{end}}
+        </ul>
+        {{range .}}
+        <div class="tab-content" data-for="{{.Title}}">{{.Content}}</div>
+        {{end}}
+    </div>
+
+
+    <script>
+        func()
+        function func() {
+            let radio = document.querySelector(".tab input:checked")
+            let divs = [...document.querySelectorAll(".tab-content")]
+            divs.forEach((elem) => {
+                if (elem.attributes["data-for"].value === radio.id) {
+                    elem.className = "tab-content checked"
+                } else {
+                    elem.className = "tab-content"
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
